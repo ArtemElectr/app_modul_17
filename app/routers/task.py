@@ -76,12 +76,12 @@ async def update_task(db: Annotated[Session, Depends(get_db)], update_task: Upda
 
 
 @router.delete('/delete')
-async def delete_user(db: Annotated[Session, Depends(get_db)], task_id: int):
+async def delete_task(db: Annotated[Session, Depends(get_db)], task_id: int):
     task = db.scalars(select(Task).where(Task.id == task_id)).fetchall()
     if not task:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="User was not found"
+            detail="Task was not found"
         )
     else:
         db.execute(delete(Task).where(Task.id == task_id))
